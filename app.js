@@ -47,7 +47,7 @@ const elements = {
   randomizeBtn: document.getElementById('randomizeBtn'),
   restartBtn: document.getElementById('restartBtn'),
   keyboardSurface: document.getElementById('keyboardSurface'),
-  activeKeyLabel: document.getElementById('activeKeyLabel')
+  sessionResults: document.getElementById('sessionResults')
 };
 
 function pickWordPool(count) {
@@ -71,6 +71,7 @@ function buildWordList(count) {
   elements.typingInput.disabled = false;
   elements.typingInput.placeholder = 'Start typing here...';
   elements.typingInput.focus();
+  elements.sessionResults?.classList.add('hidden');
   renderWords();
   renderStats();
   renderKeyboard();
@@ -126,9 +127,9 @@ function renderKeyboard() {
   shell.className = 'relative rounded-[20px] bg-[#29231f]/95 p-2 sm:p-3';
   shell.style.position = 'relative';
 
-  const keyboardWidth = Math.min(960, window.innerWidth - 60);
+  const keyboardWidth = Math.min(880, elements.keyboardSurface.clientWidth - 24);
   const keyWidth = keyboardWidth / 13;
-  const keyHeight = 56;
+  const keyHeight = 52;
 
   keyboardRows.forEach((row, rowIndex) => {
     const rowEl = document.createElement('div');
@@ -139,7 +140,7 @@ function renderKeyboard() {
       const keyEl = document.createElement('button');
       keyEl.type = 'button';
       keyEl.className = 'keycap relative flex items-center justify-center rounded-2xl bg-[#29231f] text-sm font-semibold text-slate-100';
-      keyEl.style.width = `${Math.max(38, keyWidth - 4)}px`;
+      keyEl.style.width = `${Math.max(34, keyWidth - 6)}px`;
       keyEl.style.height = `${keyHeight}px`;
       keyEl.dataset.key = key;
       keyEl.textContent = key;
@@ -185,7 +186,6 @@ function animateKeyPress(key) {
   keyEl.classList.add('pressed');
   setTimeout(() => keyEl.classList.remove('pressed'), 140);
 
-  elements.activeKeyLabel.textContent = `Pressed: ${key}`;
   const rect = keyEl.getBoundingClientRect();
   const floating = document.createElement('div');
   floating.className = 'floating-key';
@@ -217,6 +217,7 @@ function finishSession() {
   renderWords();
   clearInterval(state.timerId);
   updateWpm();
+  elements.sessionResults?.classList.remove('hidden');
   const message = `Session complete! ${state.completedWords} words typed at ${state.wpm} WPM.`;
   elements.typingInput.placeholder = message;
   elements.typingInput.disabled = true;

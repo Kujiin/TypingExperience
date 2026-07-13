@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TypeFlow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       :root {
@@ -16,7 +19,7 @@
         min-height: 100vh;
         background: radial-gradient(circle at top, rgba(22, 28, 39, 0.78), transparent 25%),
           linear-gradient(180deg, #06070f 0%, #05060b 48%, #02040a 100%);
-        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
       }
 
       .word-chip {
@@ -118,10 +121,25 @@
               </select>
             </div>
             <div id="wordDisplay" class="rounded-[28px] bg-[#29231f]/95 p-6 text-xl leading-[2.6rem] text-slate-100"></div>
+            <div class="mt-8 rounded-[28px] bg-[#1f1915]/95 p-4">
+              <div class="mb-4 flex items-center justify-between">
+                <div>
+                  <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Keyboard</p>
+                  <h3 class="text-lg font-semibold text-white">Practice in the same panel</h3>
+                </div>
+                <div class="rounded-full bg-[#7d7260]/15 px-4 py-2 text-sm text-[#7d7260]">Live</div>
+              </div>
+              <div class="rounded-[24px] bg-[#29231f]/90 p-4 mb-6">
+                <label for="typingInput" class="text-xs uppercase tracking-[0.35em] text-slate-400">Type panel</label>
+                <input id="typingInput" class="mt-3 w-full rounded-[24px] bg-[#29231f] px-5 py-4 text-lg text-white outline-none ring-0 transition focus:ring-2 focus:ring-[#7d7260]/30" autocomplete="off" spellcheck="false" placeholder="Start typing here..." />
+                <p class="mt-3 text-sm leading-6 text-slate-400">Press Space or Enter to submit each word.</p>
+              </div>
+              <div id="keyboardSurface" class="relative overflow-hidden rounded-[24px] bg-[#29231f]/95 p-3"></div>
+            </div>
           </div>
 
           <aside class="space-y-6">
-            <div class="rounded-[32px] faded-panel p-6">
+            <div id="sessionResults" class="hidden rounded-[32px] faded-panel p-6">
               <div class="grid gap-4 sm:grid-cols-2">
                 <div class="rounded-[24px] bg-[#29231f]/90 p-5 text-center">
                   <p class="text-xs uppercase tracking-[0.35em] text-slate-400">WPM</p>
@@ -141,17 +159,6 @@
                 </div>
               </div>
             </div>
-            <div class="rounded-[32px] faded-panel p-6">
-              <div class="mb-4 flex items-center justify-between gap-3">
-                <div>
-                  <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Type panel</p>
-                  <h2 class="text-lg font-semibold text-white">Enter the active word</h2>
-                </div>
-                <div class="rounded-full bg-[#7d7260]/15 px-4 py-2 text-sm text-[#7d7260]">Live</div>
-              </div>
-              <input id="typingInput" class="w-full rounded-[30px] bg-[#29231f] px-5 py-4 text-lg text-white outline-none ring-0 transition focus:ring-2 focus:ring-[#7d7260]/30" autocomplete="off" spellcheck="false" placeholder="Start typing here..." />
-              <p class="mt-3 text-sm leading-6 text-slate-400">Press Space or Enter to submit each word.</p>
-            </div>
             <div class="grid gap-3 sm:grid-cols-2">
               <button id="randomizeBtn" class="rounded-[28px] bg-[#7d7260] px-5 py-4 text-sm font-semibold uppercase tracking-[0.25em] text-[#111010] transition hover:bg-[#958568]">Randomize</button>
               <button id="restartBtn" class="rounded-[28px] bg-[#29231f] px-5 py-4 text-sm font-semibold uppercase tracking-[0.25em] text-white transition hover:bg-[#3b322c]">Restart</button>
@@ -159,18 +166,6 @@
           </aside>
         </section>
 
-        <section class="mt-8 rounded-[32px] faded-panel p-6">
-          <div class="mb-5 flex flex-wrap items-center justify-between gap-4">
-            <div>
-              <p class="text-xs uppercase tracking-[0.35em] text-slate-400">60% keyboard</p>
-              <h2 class="mt-2 text-2xl font-semibold text-white">Keys float as you type</h2>
-            </div>
-            <div class="rounded-full bg-[#7d7260]/15 px-4 py-2 text-sm text-[#7d7260]">
-              <span id="activeKeyLabel">No key yet</span>
-            </div>
-          </div>
-          <div id="keyboardSurface" class="relative overflow-hidden rounded-[28px] bg-[#29231f]/95 p-4"></div>
-        </section>
       </div>
     </div>
 
